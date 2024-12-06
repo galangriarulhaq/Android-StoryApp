@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="title_home">Home</string>
+    <string name="title_add">Add</string>
+    <string name="title_profile">Profile</string>
+    <string name="validate_password">Password must 8 characters</string>
+    <string name="validate_email">Invalid email format</string>
+</resources>
