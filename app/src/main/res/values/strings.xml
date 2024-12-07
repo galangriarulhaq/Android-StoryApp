@@ -5,4 +5,8 @@
     <string name="title_profile">Profile</string>
     <string name="validate_password">Password must 8 characters</string>
     <string name="validate_email">Invalid email format</string>
+    <string name="email_example"><![CDATA[>email@dicoding.com]]></string>
+    <string name="login">Login</string>
+    <string name="don_t_have_an_account">Don\'t Have an Account?</string>
+    <string name="sign_up">SIGN-UP</string>
 </resources>
