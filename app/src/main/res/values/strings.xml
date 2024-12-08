@@ -11,4 +11,5 @@
     <string name="sign_up">SIGN-UP</string>
     <string name="register">Register</string>
     <string name="register_success">Succes</string>
+    <string name="login_success">Login Succes</string>
 </resources>

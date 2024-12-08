@@ -22,7 +22,6 @@ class LoginViewModel(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-
     fun login(email: String, password: String) {
         _isLoading.value = true
         viewModelScope.launch {
