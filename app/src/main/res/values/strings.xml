@@ -12,4 +12,5 @@
     <string name="register">Register</string>
     <string name="register_success">Succes</string>
     <string name="login_success">Login Succes</string>
+    <string name="img_title">Image Title Story</string>
 </resources>
