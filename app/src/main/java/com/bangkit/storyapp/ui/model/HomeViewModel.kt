@@ -18,12 +18,16 @@ class HomeViewModel(private val storyRepository: StoryRepository) : ViewModel() 
     val isLoading: LiveData<Boolean> = _isLoading
 
     fun getAllStories(token: String) {
+        _isLoading.value = true
+
         viewModelScope.launch {
             _storiesResponse.value =
                 storyRepository.getAllStories(token).let { result ->
                     if (result is Result.Success) {
+                        _isLoading.value = false
                         Result.Success(result.data.listStory)
                     } else {
+                        _isLoading.value = false
                         Result.Error("Failed to fetch stories")
                     }
                 }
