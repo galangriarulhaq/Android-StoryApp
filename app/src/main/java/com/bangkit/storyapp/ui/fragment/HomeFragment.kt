@@ -7,20 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bangkit.storyapp.R
+import com.bangkit.storyapp.databinding.FragmentHomeBinding
+import com.bangkit.storyapp.ui.factory.HomeViewModelFactory
 import com.bangkit.storyapp.ui.model.HomeViewModel
 
 class HomeFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = HomeFragment()
+    private var _binding: FragmentHomeBinding? = null
+
+    private val homeViewModel: HomeViewModel by viewModels {
+        HomeViewModelFactory.getInstance(requireContext())
     }
 
-    private val viewModel: HomeViewModel by viewModels()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
+
     }
 
     override fun onCreateView(
