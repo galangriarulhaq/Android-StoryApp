@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.storyapp.data.local.datastore.UserPreferences
 import com.bangkit.storyapp.data.remote.response.ListStoryItem
@@ -72,6 +73,13 @@ class HomeFragment : Fragment() {
                 binding.progressIndicator.visibility = View.GONE
             }
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Keluar dari aplikasi
+                requireActivity().finishAffinity()
+            }
+        })
 
     }
 

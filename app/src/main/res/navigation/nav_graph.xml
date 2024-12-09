@@ -15,7 +15,14 @@
         android:id="@+id/navigation_add"
         android:name="com.bangkit.storyapp.ui.fragment.AddStoryFragment"
         android:label="@string/title_add"
-        tools:layout="@layout/fragment_add_story" />
+        tools:layout="@layout/fragment_add_story" >
+        <action
+            android:id="@+id/action_navigation_add_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:launchSingleTop="true"
+            app:popUpTo="@+id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@id/navigation_profile"
