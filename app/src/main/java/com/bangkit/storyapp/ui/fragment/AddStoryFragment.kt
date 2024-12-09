@@ -14,6 +14,7 @@ import com.bangkit.storyapp.R
 import com.bangkit.storyapp.databinding.FragmentAddStoryBinding
 import com.bangkit.storyapp.databinding.FragmentHomeBinding
 import com.bangkit.storyapp.ui.model.AddStoryViewModel
+import com.bangkit.storyapp.util.getImageUri
 
 class AddStoryFragment : Fragment() {
 
@@ -29,6 +30,8 @@ class AddStoryFragment : Fragment() {
 
         binding.btnGallery.setOnClickListener { startGallery() }
 
+        binding.btnCamera.setOnClickListener { startCamera() }
+
     }
 
     override fun onCreateView(
@@ -43,6 +46,11 @@ class AddStoryFragment : Fragment() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
+    private fun startCamera() {
+        currentImageUri = getImageUri(requireContext())
+        launcherIntentCamera.launch(currentImageUri!!)
+    }
+
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
@@ -51,6 +59,16 @@ class AddStoryFragment : Fragment() {
             showImage()
         } else {
             Log.d("Photo Picker", "No media selected")
+        }
+    }
+
+    private val launcherIntentCamera = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { isSuccess ->
+        if (isSuccess) {
+            showImage()
+        } else {
+            currentImageUri = null
         }
     }
 
