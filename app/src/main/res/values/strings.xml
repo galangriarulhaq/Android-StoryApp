@@ -14,4 +14,8 @@
     <string name="login_success">Login Succes</string>
     <string name="img_title">Image Title Story</string>
     <string name="back_button">Back</string>
+    <string name="camera">Camera\n</string>
+    <string name="gallery">Gallery</string>
+    <string name="share_your_story">Share your story.....</string>
+    <string name="add_story">Upload Story</string>
 </resources>

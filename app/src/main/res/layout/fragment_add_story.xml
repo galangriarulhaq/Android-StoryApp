@@ -1,13 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.AddStoryFragment">
 
-    <TextView
+    <ImageView
+        android:id="@+id/iv_photo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="240dp"
+        android:layout_marginHorizontal="48dp"
+        android:layout_marginVertical="24dp"
+        android:contentDescription="Preview photo"
+        app:layout_constraintHeight_percent="0.35"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_place_holder"
+        android:scaleType="centerCrop"
+        tools:ignore="HardcodedText" />
 
-</FrameLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_camera"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginVertical="20dp"
+        android:text="@string/camera"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:elevation="4dp"
+        android:padding="8dp"
+        android:drawablePadding="8dp"
+        app:icon="@drawable/baseline_camera_alt_24"
+        app:iconTint="@color/white"
+        app:iconGravity="textStart"
+        app:cornerRadius="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_photo"
+        app:layout_constraintWidth_percent="0.40" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_gallery"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginVertical="20dp"
+        android:text="@string/gallery"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:elevation="4dp"
+        android:padding="8dp"
+        android:drawablePadding="8dp"
+        app:icon="@drawable/photo_library_24px"
+        app:iconTint="@color/white"
+        app:iconGravity="textStart"
+        app:cornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_camera"
+        app:layout_constraintTop_toBottomOf="@id/iv_photo"
+        app:layout_constraintWidth_percent="0.40" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_description"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintHeight_percent="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_camera"
+        app:hintEnabled="false">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/add_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:background="@drawable/input_background"
+            android:gravity="top"
+            android:textColorHint="@color/black"
+            android:hint="@string/share_your_story"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_description">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_add"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/add_story"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            app:cornerRadius="8dp" />
+
+        <ProgressBar
+            android:id="@+id/buttonProgressBar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:visibility="gone"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/white"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
