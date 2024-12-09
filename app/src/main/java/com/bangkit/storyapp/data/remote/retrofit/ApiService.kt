@@ -54,5 +54,4 @@ interface ApiService {
         @Part("lon") lon: RequestBody?
     ): PostResponse
 
-
 }
