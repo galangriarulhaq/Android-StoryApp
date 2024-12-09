@@ -1,6 +1,7 @@
 package com.bangkit.storyapp.data.repository
 
 import com.bangkit.storyapp.data.Result
+import com.bangkit.storyapp.data.remote.response.DetailStoryResponse
 import com.bangkit.storyapp.data.remote.response.StoryResponse
 import com.bangkit.storyapp.data.remote.retrofit.ApiService
 import kotlinx.coroutines.withContext
@@ -19,6 +20,25 @@ class StoryRepository private constructor(
             try {
                 val response = apiService.getAllStories("Bearer $token")
 
+                if (!response.error!!) {
+                    Result.Success(response)
+                } else {
+                    Result.Error(response.message ?: "Unknown error occurred")
+                }
+            } catch (e: IOException) {
+                Result.Error("Network error: ${e.message}")
+            } catch (e: HttpException) {
+                Result.Error("HTTP error: ${e.message}")
+            } catch (e: Exception) {
+                Result.Error("An unexpected error occurred: ${e.message}")
+            }
+        }
+    }
+
+    suspend fun getStory(token: String, id: String): Result<DetailStoryResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.getStory("Bearer $token", id)
                 if (!response.error!!) {
                     Result.Success(response)
                 } else {
