@@ -21,4 +21,6 @@
     <string name="share_your_story">Share your story.....</string>
     <string name="add_story">Upload Story</string>
     <string name="upload_success">Upload Succes</string>
+    <string name="story">STORY</string>
+    <string name="post_story">POST STORY</string>
 </resources>

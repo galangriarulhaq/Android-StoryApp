@@ -167,7 +167,6 @@ class AddStoryFragment : Fragment() {
     }
 
     private fun hideProgressBar() {
-        binding.buttonAdd.text = context?.getString(R.string.add_story)
         binding.buttonProgressBar.visibility = View.GONE
     }
 
