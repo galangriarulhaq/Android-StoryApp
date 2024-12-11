@@ -74,13 +74,15 @@ class HomeFragment : Fragment() {
             }
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                // Keluar dari aplikasi
-                requireActivity().finishAffinity()
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // Keluar dari aplikasi hanya jika berada di Fragment ini
+                    requireActivity().finishAffinity()
+                }
             }
-        })
-
+        )
     }
 
     override fun onCreateView(

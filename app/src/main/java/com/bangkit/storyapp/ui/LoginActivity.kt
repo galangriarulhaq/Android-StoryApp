@@ -96,13 +96,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showProgressBar() {
-        binding.btnLogin.visibility = View.GONE
-        binding.progressIndicator.visibility = View.VISIBLE
+        binding.btnLogin.text = ""
+        binding.btnProgressBar.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar() {
-        binding.btnLogin.visibility = View.VISIBLE
-        binding.progressIndicator.visibility = View.GONE
+        binding.btnProgressBar.visibility = View.GONE
     }
 
 

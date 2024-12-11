@@ -7,23 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.LoginActivity">
 
-    <ProgressBar
-        android:id="@+id/progressIndicator"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
-        android:visibility="gone"
-        tools:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/img_logo"
-        android:layout_width="1500dp"
+        android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="100dp"
         android:src="@drawable/dicodinglogo"
@@ -60,6 +47,7 @@
             android:layout_height="match_parent"
             android:inputType="textEmailAddress"
             android:background="@drawable/input_background"
+            android:fontFamily="@font/open_sans"
             android:textSize="14sp"
             android:textColor="@color/black" />
 
@@ -84,24 +72,43 @@
             android:layout_height="match_parent"
             android:inputType="textPassword"
             android:background="@drawable/input_background"
+            android:fontFamily="@font/open_sans"
             android:textSize="14sp"
             android:textColor="@color/black" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_login"
+    <FrameLayout
+        android:id="@+id/btn_frame"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="24dp"
         android:layout_marginHorizontal="48dp"
-        android:textSize="18sp"
-        android:text="@string/login"
-        android:textColor="@color/white"
-        app:cornerRadius="8dp"
+        android:layout_marginVertical="12dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pass_input" />
+        app:layout_constraintTop_toBottomOf="@id/pass_input">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/login"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            app:cornerRadius="8dp" />
+
+        <ProgressBar
+            android:id="@+id/btnProgressBar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:visibility="gone"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/white"
+            android:layout_gravity="center" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -109,7 +116,7 @@
         android:layout_marginTop="12dp"
         android:orientation="horizontal"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/btn_login"
+        app:layout_constraintTop_toBottomOf="@id/btn_frame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -118,10 +125,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/abhaya_libre_regular"
             android:text="@string/don_t_have_an_account"
             android:textColor="@color/gray"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_signup"
@@ -129,10 +136,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginStart="4dp"
-            android:text="@string/sign_up"
+            android:fontFamily="@font/abhaya_libre_regular"
+            android:text="@string/tv_register"
             android:textColor="@color/blue_navy"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

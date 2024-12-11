@@ -8,7 +8,9 @@
     <string name="email_example"><![CDATA[>email@dicoding.com]]></string>
     <string name="login">Login</string>
     <string name="don_t_have_an_account">Don\'t Have an Account?</string>
-    <string name="sign_up">SIGN-UP</string>
+    <string name="already_have_an_account">Already Have an Account?</string>
+    <string name="tv_login">LOGIN</string>
+    <string name="tv_register">REGISTER</string>
     <string name="register">Register</string>
     <string name="register_success">Succes</string>
     <string name="login_success">Login Succes</string>

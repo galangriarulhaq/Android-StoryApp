@@ -35,7 +35,11 @@ class RegisterActivity : AppCompatActivity() {
 
         setupUI()
         observeViewModel()
-        //register()
+
+        binding.tvSignin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
@@ -95,13 +99,12 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun showProgressBar() {
-        binding.btnRegister.visibility = View.GONE
-        binding.progressIndicator.visibility = View.VISIBLE
+        binding.btnRegister.text = ""
+        binding.btnProgressBar.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar() {
-        binding.btnRegister.visibility = View.VISIBLE
-        binding.progressIndicator.visibility = View.GONE
+        binding.btnProgressBar.visibility = View.GONE
     }
 
 
