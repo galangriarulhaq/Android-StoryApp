@@ -1,32 +1,49 @@
 package com.bangkit.storyapp.ui.fragment
 
+import android.content.Intent
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.bangkit.storyapp.R
+import com.bangkit.storyapp.data.local.datastore.UserPreferences
+import com.bangkit.storyapp.databinding.FragmentHomeBinding
+import com.bangkit.storyapp.databinding.FragmentProfileBinding
+import com.bangkit.storyapp.ui.LoginActivity
 import com.bangkit.storyapp.ui.model.ProfileViewModel
 
 class ProfileFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = ProfileFragment()
-    }
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    private val viewModel: ProfileViewModel by viewModels()
+        binding.btnLogout.setOnClickListener {
+            UserPreferences(requireContext()).clearToken()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+            Toast.makeText(requireContext(), "Logout Succes", Toast.LENGTH_SHORT).show()
+            Handler(Looper.getMainLooper()).postDelayed({
+                val intent = Intent(requireContext(), LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                requireActivity().finish()
+            }, 1000)
 
-        // TODO: Use the ViewModel
+        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 }

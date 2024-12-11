@@ -23,4 +23,6 @@
     <string name="upload_success">Upload Succes</string>
     <string name="story">STORY</string>
     <string name="post_story">POST STORY</string>
+    <string name="info">This page will be developed in the final submission</string>
+    <string name="logout">Logout</string>
 </resources>
