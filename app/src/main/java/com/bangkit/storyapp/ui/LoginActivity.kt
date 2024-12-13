@@ -1,5 +1,7 @@
 package com.bangkit.storyapp.ui
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import com.bangkit.storyapp.data.Result
 import android.content.Intent
 import android.os.Bundle
@@ -71,6 +73,26 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
+
+        playAnimation()
+
+    }
+
+    private fun playAnimation() {
+        val emailInput = ObjectAnimator.ofFloat(binding.emailInput, View.ALPHA, 1f).setDuration(500)
+        val passwordInput = ObjectAnimator.ofFloat(binding.passInput, View.ALPHA, 1f).setDuration(500)
+        val button = ObjectAnimator.ofFloat(binding.btnFrame, View.ALPHA, 1f).setDuration(500)
+        val info = ObjectAnimator.ofFloat(binding.tvInfo, View.ALPHA, 1f).setDuration(500)
+
+        AnimatorSet().apply {
+            playSequentially(
+                emailInput,
+                passwordInput,
+                button,
+                info
+            )
+            startDelay = 100
+        }.start()
 
     }
 
