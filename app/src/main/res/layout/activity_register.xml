@@ -36,11 +36,13 @@
         android:layout_height="50dp"
         android:layout_marginTop="32dp"
         android:layout_marginHorizontal="32dp"
+        android:alpha="0"
         app:endIconMode="clear_text"
         app:startIconDrawable="@drawable/baseline_person_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_logo"
-        app:hintEnabled="false">
+        app:hintEnabled="false"
+        tools:alpha="100">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_name"
@@ -60,10 +62,12 @@
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
         android:layout_marginHorizontal="32dp"
+        android:alpha="0"
         app:startIconDrawable="@drawable/baseline_email_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name_input"
-        app:hintEnabled="false">
+        app:hintEnabled="false"
+        tools:alpha="100">
 
         <com.bangkit.storyapp.ui.customview.EmailInputText
             android:id="@+id/register_email"
@@ -83,11 +87,13 @@
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
         android:layout_marginHorizontal="32dp"
+        android:alpha="0"
         app:startIconDrawable="@drawable/baseline_lock_24"
         app:endIconMode="password_toggle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/email_input"
-        app:hintEnabled="false">
+        app:hintEnabled="false"
+        tools:alpha="100">
 
         <com.bangkit.storyapp.ui.customview.PasswordInputText
             android:id="@+id/register_password"
@@ -107,8 +113,10 @@
         android:layout_height="60dp"
         android:layout_marginHorizontal="48dp"
         android:layout_marginVertical="12dp"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pass_input">
+        app:layout_constraintTop_toBottomOf="@id/pass_input"
+        tools:alpha="100">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_register"
@@ -134,14 +142,17 @@
 
 
     <LinearLayout
+        android:id="@+id/tv_info"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:orientation="horizontal"
         android:gravity="center"
+        android:alpha="0"
         app:layout_constraintTop_toBottomOf="@id/btn_frame"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:alpha="100">
 
         <TextView
             android:id="@+id/tv_login"
