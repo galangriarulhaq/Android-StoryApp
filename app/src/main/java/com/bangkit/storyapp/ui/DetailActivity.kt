@@ -3,11 +3,8 @@ package com.bangkit.storyapp.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bangkit.storyapp.R
 import com.bangkit.storyapp.data.local.datastore.UserPreferences
 import com.bangkit.storyapp.databinding.ActivityDetailBinding
@@ -35,7 +32,7 @@ class DetailActivity : AppCompatActivity() {
         if (token != null && storyId != null) {
             detailViewModel.getStory(token, storyId)
         } else {
-            Toast.makeText(this, "Invalid StoryId or Token", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.invalid_story_id_or_token), Toast.LENGTH_SHORT).show()
         }
 
         detailViewModel.isLoading.observe(this) { isLoading ->
@@ -60,7 +57,6 @@ class DetailActivity : AppCompatActivity() {
         }
 
     }
-
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE

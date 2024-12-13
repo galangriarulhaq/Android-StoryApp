@@ -55,7 +55,26 @@ class AddStoryFragment : Fragment() {
         binding.btnGallery.setOnClickListener { startGallery() }
         binding.buttonAdd.setOnClickListener { postStory(token!!) }
 
-        observeViewModel()
+        addStoryViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) showProgressBar() else hideProgressBar()
+        }
+
+        addStoryViewModel.postResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Result.Success -> {
+                    hideProgressBar()
+                    view.findNavController().navigate(R.id.action_navigation_add_to_navigation_home)
+                    Toast.makeText(requireContext(), getString(R.string.upload_success), Toast.LENGTH_SHORT).show()
+                }
+
+                is Result.Loading -> showProgressBar()
+
+                is Result.Error -> {
+                    hideProgressBar()
+                    Toast.makeText(requireContext(), response.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
 
     }
 
@@ -71,12 +90,12 @@ class AddStoryFragment : Fragment() {
         val description = binding.addDescription.text.toString().trim()
 
         if (description.isEmpty()) {
-            Toast.makeText(requireContext(), "Please Fill a Description", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.please_fill_a_description), Toast.LENGTH_SHORT).show()
             return
         }
 
         if (currentImageUri == null) {
-            Toast.makeText(requireContext(), "Please Select Image", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.please_select_image), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -99,28 +118,6 @@ class AddStoryFragment : Fragment() {
         )
     }
 
-    private fun observeViewModel() {
-        addStoryViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading) showProgressBar() else hideProgressBar()
-        }
-
-        addStoryViewModel.postResponse.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is Result.Success -> {
-                    hideProgressBar()
-                    view?.findNavController()?.navigate(R.id.action_navigation_add_to_navigation_home)
-                    Toast.makeText(requireContext(), getString(R.string.upload_success), Toast.LENGTH_SHORT).show()
-                }
-
-                is Result.Loading -> showProgressBar()
-
-                is Result.Error -> {
-                    hideProgressBar()
-                    Toast.makeText(requireContext(), response.error, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
 
 
     private fun startGallery() {
@@ -167,6 +164,7 @@ class AddStoryFragment : Fragment() {
     }
 
     private fun hideProgressBar() {
+        binding.buttonAdd.text = getString(R.string.add_story)
         binding.buttonProgressBar.visibility = View.GONE
     }
 

@@ -67,7 +67,6 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-
         binding.tvSignup.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
@@ -87,7 +86,7 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.loginPassword.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty()){
-                Toast.makeText(this, "Fill out All Form", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.fill_out_all_form), Toast.LENGTH_SHORT).show()
             } else {
                 loginViewModel.login(email, password)
             }
@@ -101,6 +100,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun hideProgressBar() {
+        binding.btnLogin.text = getString(R.string.login)
         binding.btnProgressBar.visibility = View.GONE
     }
 

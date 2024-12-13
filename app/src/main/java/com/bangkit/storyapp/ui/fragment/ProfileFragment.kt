@@ -1,7 +1,6 @@
 package com.bangkit.storyapp.ui.fragment
 
 import android.content.Intent
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,10 +11,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.bangkit.storyapp.R
 import com.bangkit.storyapp.data.local.datastore.UserPreferences
-import com.bangkit.storyapp.databinding.FragmentHomeBinding
 import com.bangkit.storyapp.databinding.FragmentProfileBinding
 import com.bangkit.storyapp.ui.LoginActivity
-import com.bangkit.storyapp.ui.model.ProfileViewModel
 
 class ProfileFragment : Fragment() {
 
@@ -27,7 +24,7 @@ class ProfileFragment : Fragment() {
         binding.btnLogout.setOnClickListener {
             UserPreferences(requireContext()).clearToken()
 
-            Toast.makeText(requireContext(), "Logout Succes", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.logout_succes), Toast.LENGTH_SHORT).show()
             Handler(Looper.getMainLooper()).postDelayed({
                 val intent = Intent(requireContext(), LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

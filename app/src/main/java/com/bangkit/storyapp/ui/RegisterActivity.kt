@@ -104,6 +104,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun hideProgressBar() {
+        binding.btnRegister.text = getString(R.string.register)
         binding.btnProgressBar.visibility = View.GONE
     }
 

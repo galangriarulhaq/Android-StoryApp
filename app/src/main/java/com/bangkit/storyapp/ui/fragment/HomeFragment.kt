@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit.storyapp.R
 import com.bangkit.storyapp.data.local.datastore.UserPreferences
 import com.bangkit.storyapp.data.remote.response.ListStoryItem
 import com.bangkit.storyapp.databinding.FragmentHomeBinding
@@ -40,7 +41,7 @@ class HomeFragment : Fragment() {
         token?.let {
             homeViewModel.getAllStories(it)
         } ?: run {
-            Toast.makeText(requireContext(), "Token Tidak Tersedia", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.token_not_available), Toast.LENGTH_SHORT).show()
         }
 
         homeViewModel.storiesResponse.observe(viewLifecycleOwner) { result ->
@@ -55,7 +56,7 @@ class HomeFragment : Fragment() {
                     if (stories.isNotEmpty()) {
                         setStoryData(stories)
                     } else {
-                        Toast.makeText(context, "Tidak ada data cerita", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, getString(R.string.no_story_data), Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -78,7 +79,6 @@ class HomeFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    // Keluar dari aplikasi hanya jika berada di Fragment ini
                     requireActivity().finishAffinity()
                 }
             }

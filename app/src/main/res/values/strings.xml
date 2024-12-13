@@ -25,4 +25,11 @@
     <string name="post_story">POST STORY</string>
     <string name="info">This page will be developed in the final submission</string>
     <string name="logout">Logout</string>
+    <string name="logout_succes">Logout Succes</string>
+    <string name="no_story_data">No story data</string>
+    <string name="token_not_available">Token Not Available</string>
+    <string name="please_fill_a_description">Please Fill a Description</string>
+    <string name="please_select_image">Please Select Image</string>
+    <string name="invalid_story_id_or_token">Invalid StoryId or Token</string>
+    <string name="fill_out_all_form">Fill out All Form</string>
 </resources>
