@@ -147,7 +147,11 @@ class AddStoryFragment : Fragment() {
         if (isSuccess) {
             showImage()
         } else {
-            currentImageUri = null
+            val imageUri = addStoryViewModel.getImageUri()
+            if (imageUri == null) {
+                currentImageUri = null
+            }
+            currentImageUri = imageUri
         }
     }
 
