@@ -83,6 +83,30 @@ class StoryRepository private constructor(
         }
     }
 
+    suspend fun getAllStoriesLocation(
+        token: String,
+        location: Int = 1
+    ): Result<StoryResponse> {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.getAllStoriesLocation("Bearer $token", location)
+
+                if (!response.error!!) {
+                    Result.Success(response)
+                } else {
+                    Result.Error(response.message ?: "Unknown error occurred")
+                }
+            } catch (e: IOException) {
+                Result.Error("Network error: ${e.message}")
+            } catch (e: HttpException) {
+                Result.Error("HTTP error: ${e.message}")
+            } catch (e: Exception) {
+                Result.Error("An unexpected error occurred: ${e.message}")
+            }
+
+        }
+    }
+
     companion object {
         @Volatile
         private var instance: StoryRepository? = null
