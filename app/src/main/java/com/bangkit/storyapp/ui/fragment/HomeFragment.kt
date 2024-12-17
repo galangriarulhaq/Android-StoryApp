@@ -16,6 +16,7 @@ import com.bangkit.storyapp.data.local.datastore.UserPreferences
 import com.bangkit.storyapp.data.remote.response.ListStoryItem
 import com.bangkit.storyapp.databinding.FragmentHomeBinding
 import com.bangkit.storyapp.ui.DetailActivity
+import com.bangkit.storyapp.ui.StorieMapsActivity
 import com.bangkit.storyapp.ui.adapter.StoryAdapter
 import com.bangkit.storyapp.ui.factory.HomeViewModelFactory
 import com.bangkit.storyapp.ui.model.HomeViewModel
@@ -73,6 +74,11 @@ class HomeFragment : Fragment() {
             } else {
                 binding.progressIndicator.visibility = View.GONE
             }
+        }
+
+        binding.fabMap.setOnClickListener {
+            val intent = Intent(requireActivity(), StorieMapsActivity::class.java)
+            startActivity(intent)
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(
