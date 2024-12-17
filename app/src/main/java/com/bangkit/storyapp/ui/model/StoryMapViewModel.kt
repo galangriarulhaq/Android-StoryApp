@@ -17,7 +17,6 @@ class StoryMapViewModel(private val storyRepository: StoryRepository) : ViewMode
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-
     fun getAllStoriesLocation(
         token: String,
         location: Int = 1
@@ -36,5 +35,4 @@ class StoryMapViewModel(private val storyRepository: StoryRepository) : ViewMode
                 }
         }
     }
-
 }

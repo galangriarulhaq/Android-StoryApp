@@ -32,4 +32,5 @@
     <string name="please_select_image">Please Select Image</string>
     <string name="invalid_story_id_or_token">Invalid StoryId or Token</string>
     <string name="fill_out_all_form">Fill out All Form</string>
+    <string name="stories_location">Stories Location</string>
 </resources>
