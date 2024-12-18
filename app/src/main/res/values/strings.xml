@@ -34,4 +34,5 @@
     <string name="fill_out_all_form">Fill out All Form</string>
     <string name="stories_location">Stories Location</string>
     <string name="title_activity_storie_maps">StorieMapsActivity</string>
+    <string name="retry">Try Again</string>
 </resources>

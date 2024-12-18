@@ -5,32 +5,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.bangkit.storyapp.data.local.room.StoryEntity
 import com.bangkit.storyapp.data.remote.response.ListStoryItem
 import com.bangkit.storyapp.data.repository.StoryRepository
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val storyRepository: StoryRepository) : ViewModel() {
 
-    private val _storiesResponse = MutableLiveData<Result<List<ListStoryItem>>>()
-    val storiesResponse: LiveData<Result<List<ListStoryItem>>> = _storiesResponse
-
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun getAllStories(token: String) {
+    fun stories(token: String): LiveData<PagingData<StoryEntity>> {
         _isLoading.value = true
-
-        viewModelScope.launch {
-            _storiesResponse.value =
-                storyRepository.getAllStories(token).let { result ->
-                    if (result is Result.Success) {
-                        _isLoading.value = false
-                        Result.Success(result.data.listStory)
-                    } else {
-                        _isLoading.value = false
-                        Result.Error("Failed to fetch stories")
-                    }
-                }
-        }
+        return storyRepository.getAllStories(token)
+            .cachedIn(viewModelScope)
+            .also {
+                _isLoading.value = false
+            }
     }
 }

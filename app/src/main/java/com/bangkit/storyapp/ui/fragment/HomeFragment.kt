@@ -1,22 +1,18 @@
 package com.bangkit.storyapp.ui.fragment
 
 import android.content.Intent
-import com.bangkit.storyapp.data.Result
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bangkit.storyapp.R
 import com.bangkit.storyapp.data.local.datastore.UserPreferences
-import com.bangkit.storyapp.data.remote.response.ListStoryItem
 import com.bangkit.storyapp.databinding.FragmentHomeBinding
-import com.bangkit.storyapp.ui.DetailActivity
 import com.bangkit.storyapp.ui.StorieMapsActivity
+import com.bangkit.storyapp.ui.adapter.LoadingStateAdapter
 import com.bangkit.storyapp.ui.adapter.StoryAdapter
 import com.bangkit.storyapp.ui.factory.HomeViewModelFactory
 import com.bangkit.storyapp.ui.model.HomeViewModel
@@ -25,6 +21,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
 
     private val homeViewModel: HomeViewModel by viewModels {
         HomeViewModelFactory.getInstance(requireActivity())
@@ -38,43 +35,8 @@ class HomeFragment : Fragment() {
             setHasFixedSize(true)
         }
 
-        val token = UserPreferences(requireContext()).getToken()
-        token?.let {
-            homeViewModel.getAllStories(it)
-        } ?: run {
-            Toast.makeText(requireContext(), getString(R.string.token_not_available), Toast.LENGTH_SHORT).show()
-        }
+        setUpData()
 
-        homeViewModel.storiesResponse.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is Result.Loading -> {
-                    binding.progressIndicator.visibility = View.VISIBLE
-                }
-
-                is Result.Success -> {
-                    binding.progressIndicator.visibility = View.GONE
-                    val stories = result.data
-                    if (stories.isNotEmpty()) {
-                        setStoryData(stories)
-                    } else {
-                        Toast.makeText(context, getString(R.string.no_story_data), Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                is Result.Error -> {
-                    binding.progressIndicator.visibility = View.GONE
-                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        homeViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading) {
-                binding.progressIndicator.visibility = View.VISIBLE
-            } else {
-                binding.progressIndicator.visibility = View.GONE
-            }
-        }
 
         binding.fabMap.setOnClickListener {
             val intent = Intent(requireActivity(), StorieMapsActivity::class.java)
@@ -99,21 +61,29 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    private fun setStoryData(listStory: List<ListStoryItem>) {
-        val adapter = StoryAdapter(
-            onItemClick = { id -> navigateToDetailStory(id) }
+    private fun setUpData() {
+        val adapter = StoryAdapter()
+        binding.rvStory.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
         )
-        adapter.submitList(listStory)
-        binding.rvStory.adapter = adapter
-    }
 
-    private fun navigateToDetailStory(storyId: String) {
-        val intent = Intent(requireContext(), DetailActivity::class.java).apply {
-            putExtra("STORY_ID", storyId)
+        val token = UserPreferences(requireContext()).getToken()
+        homeViewModel.stories(token = token!!)
+            .observe(viewLifecycleOwner) { pagingData ->
+                adapter.submitData(lifecycle, pagingData)
+            }
+
+        homeViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                binding.progressIndicator.visibility = View.VISIBLE
+            } else {
+                binding.progressIndicator.visibility = View.GONE
+            }
         }
-        startActivity(intent)
-    }
 
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -1,19 +1,22 @@
 package com.bangkit.storyapp.ui.adapter
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bangkit.storyapp.data.local.room.StoryEntity
 import com.bangkit.storyapp.data.remote.response.ListStoryItem
 import com.bangkit.storyapp.databinding.ItemStoryBinding
+import com.bangkit.storyapp.ui.DetailActivity
 import com.bangkit.storyapp.util.formatDate
 import com.bumptech.glide.Glide
 
-class StoryAdapter(private val onItemClick: (String) -> Unit): ListAdapter<ListStoryItem, StoryAdapter.StoryViewHolder>(DIFF_CALLBACK) {
-    class StoryViewHolder(private val binding: ItemStoryBinding, private val onItemClick: (String) -> Unit): RecyclerView.ViewHolder(binding.root) {
-        fun bind(story: ListStoryItem) {
+class StoryAdapter: PagingDataAdapter<StoryEntity, StoryAdapter.StoryViewHolder>(DIFF_CALLBACK) {
+    class StoryViewHolder(private val binding: ItemStoryBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(story: StoryEntity) {
             Glide.with(binding.root.context)
                 .load(story.photoUrl)
                 .into(binding.imgStory)
@@ -22,8 +25,12 @@ class StoryAdapter(private val onItemClick: (String) -> Unit): ListAdapter<ListS
             binding.textDate.text = formatDate(story.createdAt.toString())
             binding.textDescription.text = story.description
 
-            itemView.setOnClickListener {
-                onItemClick(story.id.toString())
+            binding.root.setOnClickListener {
+                val context = binding.root.context
+                val intent = Intent(context, DetailActivity::class.java).apply {
+                    putExtra("STORY_ID", story.id)
+                }
+                context.startActivity(intent)
             }
         }
     }
@@ -33,28 +40,30 @@ class StoryAdapter(private val onItemClick: (String) -> Unit): ListAdapter<ListS
         viewType: Int
     ): StoryViewHolder {
         val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return StoryViewHolder(binding, onItemClick)
+        return StoryViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
-        val event = getItem(position)
-        holder.bind(event)
+        val data = getItem(position)
+        if (data != null) {
+            holder.bind(data)
+        }
     }
 
     companion object {
-        val DIFF_CALLBACK: DiffUtil.ItemCallback<ListStoryItem> =
-            object : DiffUtil.ItemCallback<ListStoryItem>() {
+        val DIFF_CALLBACK: DiffUtil.ItemCallback<StoryEntity> =
+            object : DiffUtil.ItemCallback<StoryEntity>() {
                 override fun areItemsTheSame(
-                    oldItem: ListStoryItem,
-                    newItem: ListStoryItem
+                    oldItem: StoryEntity,
+                    newItem: StoryEntity
                 ): Boolean {
                     return oldItem.name == newItem.name
                 }
 
                 @SuppressLint("DiffUtilEquals")
                 override fun areContentsTheSame(
-                    oldItem: ListStoryItem,
-                    newItem: ListStoryItem
+                    oldItem: StoryEntity,
+                    newItem: StoryEntity
                 ): Boolean {
                     return oldItem == newItem
                 }

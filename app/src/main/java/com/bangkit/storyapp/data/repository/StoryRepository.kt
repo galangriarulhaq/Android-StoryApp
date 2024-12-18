@@ -1,6 +1,15 @@
 package com.bangkit.storyapp.data.repository
 
+import androidx.lifecycle.LiveData
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.bangkit.storyapp.data.Result
+import com.bangkit.storyapp.data.local.room.StoryDatabase
+import com.bangkit.storyapp.data.local.room.StoryEntity
+import com.bangkit.storyapp.data.mediator.StoryRemoteMediator
 import com.bangkit.storyapp.data.remote.response.DetailStoryResponse
 import com.bangkit.storyapp.data.remote.response.PostResponse
 import com.bangkit.storyapp.data.remote.response.StoryResponse
@@ -13,29 +22,28 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class StoryRepository private constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val storyDatabase: StoryDatabase
 ) {
 
-    suspend fun getAllStories(
+    fun getAllStories(
         token: String
-    ): Result<StoryResponse> {
-        return withContext(Dispatchers.IO) {
-            try {
-                val response = apiService.getAllStories("Bearer $token")
-
-                if (!response.error!!) {
-                    Result.Success(response)
-                } else {
-                    Result.Error(response.message ?: "Unknown error occurred")
-                }
-            } catch (e: IOException) {
-                Result.Error("Network error: ${e.message}")
-            } catch (e: HttpException) {
-                Result.Error("HTTP error: ${e.message}")
-            } catch (e: Exception) {
-                Result.Error("An unexpected error occurred: ${e.message}")
+    ): LiveData<PagingData<StoryEntity>> {
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5,
+                enablePlaceholders = false
+            ),
+            remoteMediator = StoryRemoteMediator(
+                database = storyDatabase,
+                apiService = apiService,
+                token = token
+            ),
+            pagingSourceFactory = {
+                storyDatabase.storyDao().getAllStory()
             }
-        }
+        ).liveData
     }
 
     suspend fun getStory(token: String, id: String): Result<DetailStoryResponse> {
@@ -68,10 +76,10 @@ class StoryRepository private constructor(
             try {
                 val response = apiService.postStory("Bearer $token", description, photo, lat, lon)
 
-                if (!response.error!!) {
+                if (!response.error) {
                     Result.Success(response)
                 } else {
-                    Result.Error(response.message ?: "Unknown error occurred")
+                    Result.Error(response.message)
                 }
             } catch (e: IOException) {
                 Result.Error("Network error: ${e.message}")
@@ -112,9 +120,10 @@ class StoryRepository private constructor(
         private var instance: StoryRepository? = null
         fun getInstance(
             apiService: ApiService,
+            storyDatabase: StoryDatabase
         ): StoryRepository =
             instance ?: synchronized(this) {
-                instance ?: StoryRepository(apiService)
+                instance ?: StoryRepository(apiService, storyDatabase)
             }.also { instance = it }
     }
 
