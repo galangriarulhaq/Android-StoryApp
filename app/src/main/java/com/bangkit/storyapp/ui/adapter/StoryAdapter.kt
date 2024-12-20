@@ -8,7 +8,6 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.storyapp.data.local.room.StoryEntity
-import com.bangkit.storyapp.data.remote.response.ListStoryItem
 import com.bangkit.storyapp.databinding.ItemStoryBinding
 import com.bangkit.storyapp.ui.DetailActivity
 import com.bangkit.storyapp.util.formatDate
@@ -22,7 +21,7 @@ class StoryAdapter: PagingDataAdapter<StoryEntity, StoryAdapter.StoryViewHolder>
                 .into(binding.imgStory)
 
             binding.textName.text = story.name
-            binding.textDate.text = formatDate(story.createdAt.toString())
+            binding.textDate.text = formatDate(story.createdAt)
             binding.textDescription.text = story.description
 
             binding.root.setOnClickListener {

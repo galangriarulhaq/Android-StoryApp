@@ -128,13 +128,26 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switch_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_description"
+            android:layout_marginTop="12dp"
+            android:layout_marginHorizontal="16dp"
+            android:text="@string/add_location"
+            android:fontFamily="@font/poppins_regular"
+            app:trackTint="@color/white"
+            app:thumbTint="@color/blue_navy" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginHorizontal="48dp"
             android:layout_marginVertical="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_description">
+            app:layout_constraintTop_toBottomOf="@id/switch_location">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_add"

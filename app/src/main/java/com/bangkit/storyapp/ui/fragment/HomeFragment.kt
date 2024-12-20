@@ -7,10 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit.storyapp.R
 import com.bangkit.storyapp.data.local.datastore.UserPreferences
 import com.bangkit.storyapp.databinding.FragmentHomeBinding
+import com.bangkit.storyapp.ui.LoginActivity
 import com.bangkit.storyapp.ui.StorieMapsActivity
 import com.bangkit.storyapp.ui.adapter.LoadingStateAdapter
 import com.bangkit.storyapp.ui.adapter.StoryAdapter
@@ -22,6 +26,8 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var adapter: StoryAdapter
+
 
     private val homeViewModel: HomeViewModel by viewModels {
         HomeViewModelFactory.getInstance(requireActivity())
@@ -30,13 +36,21 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvStory.apply {
-            layoutManager = LinearLayoutManager(requireActivity())
-            setHasFixedSize(true)
-        }
+        val token = UserPreferences(requireContext()).getToken()
+        homeViewModel.stories(token = token!!)
+            .observe(viewLifecycleOwner) { pagingData ->
+                adapter.submitData(lifecycle, pagingData)
+            }
+
+//        token?.let {
+//            Toast.makeText(requireContext(), "Selamat Datang", Toast.LENGTH_SHORT).show()
+//        } ?: run {
+//            val intent = Intent(requireContext(), LoginActivity::class.java)
+//            startActivity(intent)
+//        }
+
 
         setUpData()
-
 
         binding.fabMap.setOnClickListener {
             val intent = Intent(requireActivity(), StorieMapsActivity::class.java)
@@ -62,28 +76,34 @@ class HomeFragment : Fragment() {
     }
 
     private fun setUpData() {
-        val adapter = StoryAdapter()
+        binding.rvStory.layoutManager = LinearLayoutManager(requireContext())
+        adapter = StoryAdapter()
         binding.rvStory.adapter = adapter.withLoadStateFooter(
             footer = LoadingStateAdapter {
                 adapter.retry()
             }
         )
 
-        val token = UserPreferences(requireContext()).getToken()
-        homeViewModel.stories(token = token!!)
-            .observe(viewLifecycleOwner) { pagingData ->
-                adapter.submitData(lifecycle, pagingData)
-            }
+        adapter.addLoadStateListener { loadState ->
+            binding.progressIndicator.visibility =
+                if (loadState.source.refresh is LoadState.Loading) View.VISIBLE else View.GONE
 
-        homeViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading) {
-                binding.progressIndicator.visibility = View.VISIBLE
-            } else {
-                binding.progressIndicator.visibility = View.GONE
+            val errorState = loadState.source.refresh as? LoadState.Error
+                ?: loadState.source.append as? LoadState.Error
+                ?: loadState.source.prepend as? LoadState.Error
+
+            errorState?.let {
+                it.error.localizedMessage?.let { it1 -> Toast.makeText(requireContext(), it1, Toast.LENGTH_SHORT).show() }
             }
         }
 
+        // observeViewModel()
+
     }
+
+//    private fun observeViewModel() {
+//
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
