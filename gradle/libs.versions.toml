@@ -3,6 +3,7 @@ agp = "8.4.0"
 converterGson = "2.9.0"
 coreTesting = "2.1.0"
 datastorePreferences = "1.1.1"
+espressoIdlingResource = "3.4.0"
 glide = "4.16.0"
 kotlin = "1.9.0"
 coreKtx = "1.15.0"
@@ -22,8 +23,10 @@ lifecycleViewmodelKtx = "2.8.7"
 fragmentKtx = "1.8.5"
 mockitoInline = "4.4.0"
 mockitoCore = "4.4.0"
+mockwebserver = "4.9.3"
 navigationFragmentKtx = "2.8.4"
 navigationUiKtx = "2.8.4"
+okhttpTls = "4.9.3"
 pagingRuntimeKtx = "3.1.0"
 retrofit = "2.9.0"
 googleAndroidLibrariesMapsplatformSecretsGradlePlugin = "2.0.1"
@@ -38,6 +41,7 @@ playServicesLocation = "21.3.0"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-espresso-idling-resource = { module = "androidx.test.espresso:espresso-idling-resource", version.ref = "espressoIdlingResource" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleLivedataKtx" }
 androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
@@ -63,6 +67,8 @@ androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navi
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
+okhttp-tls = { module = "com.squareup.okhttp3:okhttp-tls", version.ref = "okhttpTls" }
+mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "mockwebserver" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit2-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }

@@ -42,6 +42,9 @@ android {
         viewBinding = true
         buildConfig = true
     }
+    testOptions {
+        animationsDisabled = true
+    }
 }
 
 dependencies {
@@ -96,5 +99,11 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockito.inline)
     testImplementation(libs.mockito.core)
+
+    //mock web server
+    androidTestImplementation(libs.mockwebserver)
+    androidTestImplementation(libs.okhttp.tls)
+
+    implementation(libs.androidx.espresso.idling.resource)
 
 }

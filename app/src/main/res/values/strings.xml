@@ -36,4 +36,6 @@
     <string name="title_activity_storie_maps">StorieMapsActivity</string>
     <string name="retry">Try Again</string>
     <string name="add_location">Add Location</string>
+    <string name="from">from</string>
+    <string name="galang_riarulhaq">Galang Riarulhaq</string>
 </resources>
