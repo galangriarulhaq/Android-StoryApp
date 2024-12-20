@@ -1,6 +1,5 @@
 package com.bangkit.storyapp.ui.model
 
-import com.bangkit.storyapp.data.Result
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.bangkit.storyapp.data.local.room.StoryEntity
-import com.bangkit.storyapp.data.remote.response.ListStoryItem
 import com.bangkit.storyapp.data.repository.StoryRepository
-import kotlinx.coroutines.launch
 
 class HomeViewModel(private val storyRepository: StoryRepository) : ViewModel() {
 
