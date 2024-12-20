@@ -1,5 +1,7 @@
 package com.bangkit.storyapp.ui.fragment
 
+import android.Manifest
+import android.content.pm.PackageManager
 import com.bangkit.storyapp.data.Result
 import android.net.Uri
 import androidx.fragment.app.viewModels
@@ -12,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.navigation.findNavController
 import com.bangkit.storyapp.R
 import com.bangkit.storyapp.data.local.datastore.UserPreferences
@@ -21,6 +24,8 @@ import com.bangkit.storyapp.ui.model.AddStoryViewModel
 import com.bangkit.storyapp.util.getImageUri
 import com.bangkit.storyapp.util.reduceFileImage
 import com.bangkit.storyapp.util.uriToFile
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -37,8 +42,10 @@ class AddStoryFragment : Fragment() {
 
     private var currentImageUri: Uri? = null
 
-    private var currentLat: Double? = null
-    private var currentLon: Double? = null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private var currentLat: Double? = 0.0
+    private var currentLon: Double? = 0.0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,6 +57,10 @@ class AddStoryFragment : Fragment() {
         }
 
         val token = UserPreferences(requireContext()).getToken()
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        getCurrentLocation()
 
         binding.btnCamera.setOnClickListener { startCamera() }
         binding.btnGallery.setOnClickListener { startGallery() }
@@ -159,6 +170,37 @@ class AddStoryFragment : Fragment() {
         currentImageUri?.let {
             Log.d("Image URI", "showImage: $it")
             binding.ivPhoto.setImageURI(it)
+        }
+    }
+
+    private fun getCurrentLocation() {
+        binding.switchLocation.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                if (ActivityCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    ActivityCompat.requestPermissions(
+                        requireActivity(),
+                        arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                        101
+                    )
+                    return@setOnCheckedChangeListener
+                }
+
+                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                    if (location != null) {
+                        currentLat = location.latitude
+                        currentLon = location.longitude
+                    } else {
+                        Log.e("LocationError", "Cannot find location")
+                    }
+                }
+            } else {
+                currentLat = 0.0
+                currentLon = 0.0
+            }
         }
     }
 

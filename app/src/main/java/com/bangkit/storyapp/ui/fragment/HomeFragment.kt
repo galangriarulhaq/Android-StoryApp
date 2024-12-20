@@ -11,10 +11,8 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bangkit.storyapp.R
 import com.bangkit.storyapp.data.local.datastore.UserPreferences
 import com.bangkit.storyapp.databinding.FragmentHomeBinding
-import com.bangkit.storyapp.ui.LoginActivity
 import com.bangkit.storyapp.ui.StorieMapsActivity
 import com.bangkit.storyapp.ui.adapter.LoadingStateAdapter
 import com.bangkit.storyapp.ui.adapter.StoryAdapter
@@ -41,14 +39,6 @@ class HomeFragment : Fragment() {
             .observe(viewLifecycleOwner) { pagingData ->
                 adapter.submitData(lifecycle, pagingData)
             }
-
-//        token?.let {
-//            Toast.makeText(requireContext(), "Selamat Datang", Toast.LENGTH_SHORT).show()
-//        } ?: run {
-//            val intent = Intent(requireContext(), LoginActivity::class.java)
-//            startActivity(intent)
-//        }
-
 
         setUpData()
 
@@ -97,17 +87,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // observeViewModel()
-
-    }
-
-//    private fun observeViewModel() {
-//
-//    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
 }

@@ -138,7 +138,7 @@
             android:layout_marginHorizontal="16dp"
             android:text="@string/add_location"
             android:fontFamily="@font/poppins_regular"
-            app:trackTint="@color/white"
+            app:trackTint="@color/gray"
             app:thumbTint="@color/blue_navy" />
 
         <FrameLayout
