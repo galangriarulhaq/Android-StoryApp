@@ -13,7 +13,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.storyapp.data.local.datastore.UserPreferences
 import com.bangkit.storyapp.databinding.FragmentHomeBinding
-import com.bangkit.storyapp.ui.StorieMapsActivity
+import com.bangkit.storyapp.ui.StoriesMapsActivity
 import com.bangkit.storyapp.ui.adapter.LoadingStateAdapter
 import com.bangkit.storyapp.ui.adapter.StoryAdapter
 import com.bangkit.storyapp.ui.factory.HomeViewModelFactory
@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
         setUpData()
 
         binding.fabMap.setOnClickListener {
-            val intent = Intent(requireActivity(), StorieMapsActivity::class.java)
+            val intent = Intent(requireActivity(), StoriesMapsActivity::class.java)
             startActivity(intent)
         }
 

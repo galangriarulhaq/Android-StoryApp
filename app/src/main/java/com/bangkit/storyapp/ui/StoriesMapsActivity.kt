@@ -17,16 +17,16 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.bangkit.storyapp.databinding.ActivityStorieMapsBinding
+import com.bangkit.storyapp.databinding.ActivityStoriesMapsBinding
 import com.bangkit.storyapp.ui.factory.StoryMapViewModelFactory
 import com.bangkit.storyapp.ui.model.StoryMapViewModel
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 
-class StorieMapsActivity : AppCompatActivity(), OnMapReadyCallback {
+class StoriesMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
-    private lateinit var binding: ActivityStorieMapsBinding
+    private lateinit var binding: ActivityStoriesMapsBinding
 
     private val storyMapViewModel: StoryMapViewModel by viewModels {
         StoryMapViewModelFactory.getInstance(this)
@@ -35,7 +35,7 @@ class StorieMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityStorieMapsBinding.inflate(layoutInflater)
+        binding = ActivityStoriesMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val mapFragment = supportFragmentManager
@@ -83,6 +83,7 @@ class StorieMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
 
+
         setMapStyle()
     }
 
@@ -94,7 +95,7 @@ class StorieMapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val lat = story.lat
             val lon = story.lon
             if (lat != null && lon != null) {
-                val latLng = LatLng(lat as Double, lon as Double)
+                val latLng = LatLng(lat, lon)
                 mMap.addMarker(
                     MarkerOptions()
                         .position(latLng)
